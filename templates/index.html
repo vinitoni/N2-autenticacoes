@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autenticações - Google / Github / Redefinir Seha</title>
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:500);
+    body {
+      font-family: "Roboto", sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+    .container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      max-width: 400px;
+      width: 100%;
+    }
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .detail {
+      margin: 20px 0;
+      padding: 10px;
+      border: solid gold 2px;
+      background-color: #faf3cd;
+    }
+    .google-btn,
+    .github-btn {
+      width: 100%;
+      height: 42px;
+      border-radius: 2px;
+      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+      display: block;
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+      line-height: 42px;
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .google-btn {
+      background-color: #4285f4;
+    }
+    .github-btn {
+      background-color: #333;
+    }
+    .google-btn:hover {
+      background-color: #357ae8;
+      box-shadow: 0 0 6px #4285f4;
+    }
+    .github-btn:hover {
+      background-color: #2b2b2b;
+      box-shadow: 0 0 6px #333;
+    }
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+    .login-form input {
+      height: 40px;
+      padding: 0 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .reset-btn {
+      margin-top: 15px;
+      color: #007bff;
+      font-size: 14px;
+      text-decoration: underline;
+      cursor: pointer;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h3>Login com Google e GitHub</h3>
+    
+    {% if not google_data and not github_data %}
+      <p>Você não está logado. Clique em um dos botões abaixo para entrar:</p>
+
+      <!-- Botão de Login do Google -->
+      <a href="/login" class="google-btn">Sign in com Google</a>
+      
+      <!-- Botão de Login do GitHub -->
+      <a href="/github_login" class="github-btn">Sign in com GitHub</a>
+
+      <form action="/login_email" method="POST" class="login-form">
+        <input type="email" name="email" placeholder="E-mail" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        <button type="submit" class="google-btn">Entrar com E-mail e Senha</button>
+      </form>
+
+
+      <!-- Botão de Recuperação de Senha -->
+      <form action="/forgot_password" method="GET">
+        <button type="submit" class="reset-btn">Esqueceu sua senha? Recupere aqui</button>
+      </form>
+
+    {% else %}
+      <p>Bem-vindo, {% if google_data %}{{ google_data.name }} ({{ google_data.email }}){% elif github_data %}{{ github_data.login }}{% endif %}.</p>
+      
+      {% if google_data %}
+        <div class="detail">
+          <p>Informações do Google:</p>
+          {% for key, value in google_data.items() %}
+            <p><strong>{{ key }}</strong>: {{ value }}</p>
+          {% endfor %}
+        </div>
+      {% elif github_data %}
+        <div class="detail">
+          <p>Informações do GitHub:</p>
+          {% for key, value in github_data.items() %}
+            <p><strong>{{ key }}</strong>: {{ value }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</body>
+</html>
