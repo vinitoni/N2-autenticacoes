@@ -6,5 +6,5 @@ class Config:
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'pentestseguranca1@gmail.com'  # Substitua pelo seu email
-    MAIL_PASSWORD = '123456789C!'   # Substitua pela senha do email
+    MAIL_USERNAME = ''  
+    MAIL_PASSWORD = ''   
